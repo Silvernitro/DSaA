@@ -88,7 +88,7 @@ class PositionList(_DoublyLinkedList):
             return not (self==other)
 
     def _validate(self, p):
-        """Returns the node associated with the given position only if 
+        """Returns the node associated with the given position only if
         the position is valid."""
         if not isinstance(p, self.Position):
             raise TypeError("p is not a valid Position type.")
@@ -210,6 +210,23 @@ class PositionList(_DoublyLinkedList):
         p_node._next, p_node._pre, q_node_._next, q_node._prev= q_node._next,\
         q_node._prev, p_node._next, p_node._prev
 
+    def merge(self, S):
+        """If PositionalLists self and S are sorted, merge S into self to
+        produce a new sorted Positional List."""
+
+        if not self._is_sorted(A) or self._is_sorted(B):
+            raise Exception("Unsorted lists cannot be merged.")
+        for node_b in S:
+            old_len = len(self)
+            for node_a in self:
+                if node_a > node_b:
+                    self._insert_between(node_b._element, node_a._prev, node_a)
+                    break
+            #If node_b is larger than all node_a and was not added:
+            if len(S) == old_len:
+                self._insert_between(node_b, self.last()._prev, self.last())
+            self.delete(node_b)
+
 class LinkedStack():
     class _Node():
         __slots__='_element', '_next'
@@ -242,7 +259,7 @@ class LinkedStack():
     def top(self):
         if self._is_empty():
             raise Empty("The stack is empty.")
-        return self._header._next._element 
+        return self._header._next._element
 
 class RecursiveList():
     def __init__(self, element, rest=None):
@@ -261,4 +278,4 @@ class RecursiveList():
                 data.append(self._element)
                 data.append(recursive_print(self._rest))
         recursive_print(self)
-        return(", ".join(str(x) for x in data))
+        return(", ".join(str(x) for x in data)

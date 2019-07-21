@@ -3,7 +3,7 @@ class Tree():
         def element(self):
             raise NotImplementedError('must be implemented by subclass')
         def __eq__(self, other):
-            raise NotImplementedError('must be implemented by subclass')           
+            raise NotImplementedError('must be implemented by subclass')         
         def __ne__(self, other):
             return not(self==other)
 
